@@ -27,7 +27,7 @@ async function registerTransaction(req, res) {
 
         await connection.query(`
         INSERT INTO transactions ("userId", date, description, value) VALUES ($1, $2, $3, $4);
-        `, [userId,new Date().toLocaleDateString("pt-Br"), description, value]);
+        `, [userId, new Date().toLocaleDateString(`pt-br`), description, value]);
 
         res.sendStatus(201);
         
