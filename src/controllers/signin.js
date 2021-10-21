@@ -18,7 +18,6 @@ async function signIn(req, res) {
         if(!isPasswordCorrect) {
             return res.sendStatus(401);
         }
-
         const token = generateToken();
         await connection.query(`
             INSERT INTO sessions (token, "userId") VALUES ($1, $2);
