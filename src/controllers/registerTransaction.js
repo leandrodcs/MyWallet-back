@@ -26,8 +26,8 @@ async function registerTransaction(req, res) {
         if (!userId) return res.sendStatus(404);
 
         await connection.query(`
-        INSERT INTO transactions ("userId", description, value) VALUES ($1, $2, $3);
-        `, [userId, description, value]);
+        INSERT INTO transactions ("userId", date, description, value) VALUES ($1, $2, $3, $4);
+        `, [userId,new Date().toLocaleDateString("pt-Br"), description, value]);
 
         res.sendStatus(201);
         

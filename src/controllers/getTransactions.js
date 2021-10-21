@@ -9,7 +9,7 @@ async function getTransactions(req, res) {
         if(!token) return res.sendStatus(401);
 
         const transactions = await connection.query(`
-            SELECT transactions.description, transactions.value FROM sessions
+            SELECT transactions.date, transactions.description, transactions.value FROM sessions
             JOIN transactions
             ON sessions."userId" = transactions."userId"
             WHERE sessions.token = $1;
