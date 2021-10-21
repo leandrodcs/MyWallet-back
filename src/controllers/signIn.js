@@ -23,7 +23,10 @@ async function signIn(req, res) {
             INSERT INTO sessions (token, "userId") VALUES ($1, $2);
         `, [token, user.id]);
 
-        res.status(200).send(token);
+        res.status(200).send({
+            name: user.name,
+            token,
+        });
     } catch (error) {
         console.log(error);
         res.sendStatus(500);
