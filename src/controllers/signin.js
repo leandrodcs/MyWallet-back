@@ -1,16 +1,14 @@
 import connection from "../database/database.js";
 import bcrypt from 'bcrypt';
-import { validateUser } from "../validations/validations.js";
+import { v4 as generateToken } from 'uuid';
 
 async function signIn(req, res) {
-    const userLogging = req.body;
     const {
         email,
         password
     } = req.body;
 
     try {
-
         const users = await connection.query(`SELECT * FROM users WHERE email = $1;`, [email]);
         const user = users.rows[0];
         if(!user) {
@@ -20,17 +18,13 @@ async function signIn(req, res) {
         if(!isPasswordCorrect) {
             return res.sendStatus(401);
         }
-        res.sendStatus(200);
-        // if(validateUser(newUser)) {
-        //     return res.sendStatus(400);
-        // }
 
+        const token = generateToken();
+        await connection.query(`
+            INSERT INTO sessions (token, "userId") VALUES ($1, $2);
+        `, [token, user.id]);
 
-        // const hashPassword = bcrypt.hashSync(password, 10);
-        // await connection.query(`INSERT INTO users (name, email, password) VALUES ($1, $2, $3);`, [name, email, hashPassword]);
-        // res.sendStatus(201);
-
-        
+        res.status(200).send(token);
     } catch (error) {
         console.log(error);
         res.sendStatus(500);

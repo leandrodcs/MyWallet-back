@@ -23,7 +23,6 @@ async function signUp(req, res) {
         const hashPassword = bcrypt.hashSync(password, 10);
         await connection.query(`INSERT INTO users (name, email, password) VALUES ($1, $2, $3);`, [name, email, hashPassword]);
         res.sendStatus(201);
-        
     } catch (error) {
         console.log(error);
         res.sendStatus(500);
