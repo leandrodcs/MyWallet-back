@@ -12,8 +12,8 @@ async function registerTransaction(req, res) {
 
     try {
 
-        if(!token) return res.sendStatus(401);
-        if(validateEntry(newEntry)) return res.sendStatus(400);
+        if(!token) return res.status(401).send("Suas credenciais expiraram.");
+        if(validateEntry(newEntry)) return res.status(400).send("Preencha os campos corretamente.");
 
         const users = await connection.query(`
             SELECT users.id FROM sessions
@@ -23,17 +23,17 @@ async function registerTransaction(req, res) {
         `, [token]);
 
         const userId = users.rows[0].id;
-        if (!userId) return res.sendStatus(404);
+        if (!userId) return res.status(404).send("Usuário inexistente.");
 
         await connection.query(`
         INSERT INTO transactions ("userId", date, description, value) VALUES ($1, $2, $3, $4);
         `, [userId, new Date().toLocaleDateString(`pt-br`), description, value]);
 
-        res.sendStatus(201);
+        res.status(201).send("Sua movimentação foi cadastrada.");
         
     } catch (error) {
         console.log(error);
-        res.sendStatus(500);
+        res.status(500).send("Ocorreu um erro no nosso sistema, tente novamente mais tarde.");
     }
 }
 

@@ -6,7 +6,7 @@ async function getTransactions(req, res) {
 
     try {
 
-        if(!token) return res.sendStatus(401);
+        if(!token) return res.status(401).send("Suas credenciais expiraram.");
 
         const transactions = await connection.query(`
             SELECT transactions.date, transactions.description, transactions.value FROM sessions
@@ -19,7 +19,7 @@ async function getTransactions(req, res) {
         
     } catch (error) {
         console.log(error);
-        res.sendStatus(500);
+        res.status(500).send("Ocorreu um erro no nosso sistema, tente novamente mais tarde.");
     }
 }
 

@@ -12,11 +12,11 @@ async function signIn(req, res) {
         const users = await connection.query(`SELECT * FROM users WHERE email = $1;`, [email]);
         const user = users.rows[0];
         if(!user) {
-            return res.sendStatus(404);
+            return res.status(404).send("Este email não está cadastrado.");
         }
         const isPasswordCorrect = bcrypt.compareSync(password, user.password);
         if(!isPasswordCorrect) {
-            return res.sendStatus(401);
+            return res.status(401).send("A senha inserida está incorreta.");
         }
         const token = generateToken();
         await connection.query(`
@@ -29,7 +29,7 @@ async function signIn(req, res) {
         });
     } catch (error) {
         console.log(error);
-        res.sendStatus(500);
+        res.status(500).send("Ocorreu um erro no nosso sistema, tente novamente mais tarde.");
     }
 }
 

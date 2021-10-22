@@ -12,20 +12,20 @@ async function signUp(req, res) {
 
     try {
         if(validateUser(newUser)) {
-            return res.sendStatus(400);
+            return res.status(400).send("Os campos precisam ser preenchidos corretamente!");
         }
 
         const users = await connection.query(`SELECT * FROM users WHERE email = $1;`, [email]);
         const user = users.rows[0];
         if(user) {
-            return res.sendStatus(409);
+            return res.status(409).send("Esse email já esta cadastrado.");
         }
         const hashPassword = bcrypt.hashSync(password, 10);
         await connection.query(`INSERT INTO users (name, email, password) VALUES ($1, $2, $3);`, [name, email, hashPassword]);
-        res.sendStatus(201);
+        res.status(201).send("Sua conta foi criada com sucesso.");
     } catch (error) {
         console.log(error);
-        res.sendStatus(500);
+        res.status(500).send("Ocorreu um erro no nosso sistema, tente novamente mais tarde.");
     }
 }
 
