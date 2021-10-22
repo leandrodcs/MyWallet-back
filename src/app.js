@@ -18,4 +18,6 @@ app.get(`/transactions`, getTransactions);
 
 app.post(`/transactions`, registerTransaction);
 
-app.listen(4000);
+export {
+    app
+}
