@@ -27,4 +27,13 @@ describe(`POST /sign-in`, () => {
         const status = result.status;
         expect(status).toEqual(401);
     });
+
+    it(`returns user name`, async () => {
+        const body = {
+            email: "permanentTest@email.com",
+            password: "permanentTester",
+        };
+        const result = await supertest(app).post(`/sign-in`).send(body);
+        expect(result.body.name).toEqual(`permanentTester`);
+    });
 });
