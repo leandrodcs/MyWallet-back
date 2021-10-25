@@ -12,6 +12,9 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
+    const result = await connection.query(`SELECT * FROM users WHERE name = 'signintester';`);
+    const {id} = result.rows[0];
+    await connection.query(`DELETE FROM sessions WHERE "userId" = $1;`, [id]);
     await connection.query(`DELETE FROM users WHERE name = 'signintester';`);
     connection.end();
   });

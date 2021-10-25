@@ -1,14 +1,19 @@
 import connection from "../database/database.js";
 import bcrypt from 'bcrypt';
 import { v4 as generateToken } from 'uuid';
+import { validateLogin } from "../validations/validations.js";
 
 async function signIn(req, res) {
+    const loginInfo = req.body;
     const {
         email,
         password
     } = req.body;
 
     try {
+        if(validateLogin(loginInfo)) {
+            return res.status(400).send("Os campos precisam ser preenchidos corretamente!");
+        }
         const users = await connection.query(`SELECT * FROM users WHERE email = $1;`, [email]);
         const user = users.rows[0];
         if(!user) {

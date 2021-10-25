@@ -12,7 +12,7 @@ async function registerTransaction(req, res) {
 
     try {
 
-        if(!token) return res.status(401).send("Suas credenciais expiraram.");
+        if(!token) return res.status(401).send("Você não possui a chave de acesso.");
         if(validateEntry(newEntry)) return res.status(400).send("Preencha os campos corretamente.");
 
         const users = await connection.query(`
@@ -23,7 +23,7 @@ async function registerTransaction(req, res) {
         `, [token]);
 
         const userId = users.rows[0].id;
-        if (!userId) return res.status(404).send("Usuário inexistente.");
+        if (!userId) return res.status(404).send("Suas credenciais expiraram.");
 
         await connection.query(`
         INSERT INTO transactions ("userId", date, description, value) VALUES ($1, $2, $3, $4);
