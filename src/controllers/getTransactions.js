@@ -6,10 +6,10 @@ async function getTransactions(req, res) {
 
     try {
 
-        if(!token) return res.status(401).send("Suas credenciais expiraram.");
+        if(!token) return res.status(401).send("Você não possui a chave de acesso.");
 
         const transactions = await connection.query(`
-            SELECT transactions.date, transactions.description, transactions.value FROM sessions
+            SELECT transactions.id, transactions.date, transactions.description, transactions.value FROM sessions
             JOIN transactions
             ON sessions."userId" = transactions."userId"
             WHERE sessions.token = $1;
@@ -24,5 +24,5 @@ async function getTransactions(req, res) {
 }
 
 export {
-    getTransactions
+    getTransactions,
 }
