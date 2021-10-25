@@ -21,7 +21,7 @@ afterAll(async () => {
 
 describe(`POST /sign-in`, () => {
 
-    it(`returns status 404`, async () => {
+    it(`returns 404 for invalid email`, async () => {
         const body = {
             email: "wrongEmail@test.com",
             password: "signintester",
@@ -31,7 +31,7 @@ describe(`POST /sign-in`, () => {
         expect(status).toEqual(404);
     });
 
-    it(`returns status 401`, async () => {
+    it(`returns 401 for invalid password`, async () => {
         const body = {
             email: "signintester@test.com",
             password: "wrongPassword",
@@ -41,7 +41,7 @@ describe(`POST /sign-in`, () => {
         expect(status).toEqual(401);
     });
 
-    it(`returns user name`, async () => {
+    it(`returns 200 and an object containing name and token params`, async () => {
         const body = {
             email: "signintester@test.com",
             password: "signintester",

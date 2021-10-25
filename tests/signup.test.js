@@ -9,14 +9,14 @@ afterAll(async () => {
 
 describe(`POST /sign-up`, () => {
 
-    it(`returns status 400`, async () => {
+    it(`returns 400 for invalid body`, async () => {
         const body = {};
         const result = await supertest(app).post(`/sign-up`).send(body);
         const status = result.status;
         expect(status).toEqual(400);
     });
 
-    it(`returns status 201`, async () => {
+    it(`returns 201 for valid body`, async () => {
         const body = {
             name: "test",
             email: "signuptester@test.com",
@@ -27,7 +27,7 @@ describe(`POST /sign-up`, () => {
         expect(status).toEqual(201);
     });
 
-    it(`returns status 409`, async () => {
+    it(`returns 409 for email already registered on db`, async () => {
         const body = {
             name: "test",
             email: "signuptester@test.com",

@@ -26,21 +26,21 @@ afterAll(async () => {
 
 describe(`POST /transactions`, () => {
 
-    it(`returns status 401`, async () => {
+    it(`returns 401 for no token on headers sent`, async () => {
         const body = {description: "Just a test", value: 123};
         const result = await supertest(app).post(`/transactions`).send(body);
 
         expect(result.status).toEqual(401);
     });
 
-    it(`returns status 400`, async () => {
+    it(`returns 400 for invalid body`, async () => {
         const body = {description: "", value: 123};
         const result = await supertest(app).post(`/transactions`).set('Authorization', `Bearer ${token}`).send(body);
 
         expect(result.status).toEqual(400);
     });
 
-    it(`returns status 201`, async () => {
+    it(`returns 201 for valid body and token`, async () => {
         const body = {description: "Just a test post", value: 123};
         const result = await supertest(app).post(`/transactions`).set('Authorization', `Bearer ${token}`).send(body);
 
@@ -50,13 +50,13 @@ describe(`POST /transactions`, () => {
 
 describe(`GET /transactions`, () => {
 
-    it(`returns status 401`, async () => {
+    it(`returns 401 for no token on headers sent`, async () => {
         const result = await supertest(app).get(`/transactions`);
 
         expect(result.status).toEqual(401);
     });
 
-    it(`returns status 200`, async () => {
+    it(`returns 200 and an array containing an object with the given properties and values`, async () => {
         const result = await supertest(app).get(`/transactions`).set('Authorization', `Bearer ${token}`);
 
         expect(result.status).toEqual(200);
