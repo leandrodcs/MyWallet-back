@@ -11,7 +11,7 @@ async function getTransactions(req, res) {
         const transactions = await connection.query(`
             SELECT transactions.id, transactions.date, transactions.description, transactions.value FROM sessions
             JOIN transactions
-            ON sessions."userId" = transactions."userId"
+            ON sessions.user_id = transactions.user_id
             WHERE sessions.token = $1;
         `, [token]);
 

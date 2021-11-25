@@ -25,7 +25,7 @@ async function signIn(req, res) {
         }
         const token = generateToken();
         await connection.query(`
-            INSERT INTO sessions (token, "userId") VALUES ($1, $2);
+            INSERT INTO sessions (token, user_id) VALUES ($1, $2);
         `, [token, user.id]);
 
         res.status(200).send({

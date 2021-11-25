@@ -24,6 +24,4 @@ app.delete(`/sign-out`, signOut);
 
 app.delete(`/transactions`, deleteTransaction);
 
-export {
-    app,
-}
+export default app;

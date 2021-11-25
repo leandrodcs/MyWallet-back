@@ -18,7 +18,7 @@ async function registerTransaction(req, res) {
         const users = await connection.query(`
             SELECT users.id FROM sessions
             JOIN users
-            ON sessions."userId" = users.id
+            ON sessions.user_id = users.id
             WHERE sessions.token = $1;
         `, [token]);
 
@@ -26,7 +26,7 @@ async function registerTransaction(req, res) {
         if (!userId) return res.status(404).send("Suas credenciais expiraram.");
 
         await connection.query(`
-        INSERT INTO transactions ("userId", date, description, value) VALUES ($1, $2, $3, $4);
+        INSERT INTO transactions (user_id, date, description, value) VALUES ($1, $2, $3, $4);
         `, [userId, new Date().toLocaleDateString(`pt-br`), description, value]);
 
         res.status(201).send("Sua movimentação foi cadastrada.");

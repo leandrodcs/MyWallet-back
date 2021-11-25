@@ -1,6 +1,7 @@
+import '../src/setup.js';
 import supertest from "supertest";
 import connection from "../src/database/database.js";
-import { app } from "../src/app.js";
+import app from "../src/app.js";
 
 let token;
 
@@ -18,8 +19,8 @@ beforeAll(async () => {
 afterAll(async () => {
     const result = await connection.query(`SELECT * FROM users WHERE name = 'transactionstester';`);
     const {id} = result.rows[0];
-    await connection.query(`DELETE FROM transactions WHERE "userId" = $1;`, [id]);
-    await connection.query(`DELETE FROM sessions WHERE "userId" = $1;`, [id]);
+    await connection.query(`DELETE FROM transactions WHERE user_id = $1;`, [id]);
+    await connection.query(`DELETE FROM sessions WHERE user_id = $1;`, [id]);
     await connection.query(`DELETE FROM users WHERE name = 'transactionstester';`);
     connection.end();
 });

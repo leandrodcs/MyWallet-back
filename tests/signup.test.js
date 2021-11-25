@@ -1,6 +1,7 @@
+import '../src/setup.js';
 import supertest from "supertest";
 import connection from "../src/database/database.js";
-import { app } from "../src/app.js";
+import app from "../src/app.js";
 
 afterAll(async () => {
     await connection.query(`DELETE FROM users WHERE email = 'signuptester@test.com';`);

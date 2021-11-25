@@ -10,8 +10,8 @@ async function deleteTransaction(req, res) {
 
         if(!token) return res.status(401).send("Você não possui a chave de acesso.");
 
-        const users = await connection.query(`SELECT sessions."userId" FROM sessions WHERE sessions.token = $1;`, [token]);
-        const {userId} = users.rows[0];
+        const users = await connection.query(`SELECT sessions.user_id FROM sessions WHERE sessions.token = $1;`, [token]);
+        const userId = users.rows[0].user_id;
         
         if (!userId) return res.status(404).send("Suas credenciais expiraram.");
 
