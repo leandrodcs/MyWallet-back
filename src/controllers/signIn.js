@@ -30,6 +30,8 @@ async function signIn(req, res) {
 
         res.status(200).send({
             name: user.name,
+            email: user.email,
+            password: user.password,
             token,
         });
     } catch (error) {
