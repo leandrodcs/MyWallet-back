@@ -12,7 +12,10 @@ async function signUp(req, res) {
 
     try {
         if(validateUser(newUser)) {
-            return res.status(400).send("Os campos precisam ser preenchidos corretamente!");
+            const message = validateUser(newUser).details[0].message;
+            if(message.includes("name")) return res.status(400).send('Nome deve ter no máximo 30 caracteres');
+            if(message.includes("email")) return res.status(400).send('Insira um email válido');
+            if(message.includes("password")) return res.status(400).send('A senha deve ter no mínimo 6 caracteres');
         }
 
         const users = await connection.query(`SELECT * FROM users WHERE email = $1;`, [email]);
