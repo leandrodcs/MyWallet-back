@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+import 'dayjs/locale/pt-br.js';
 import connection from "../database/database.js";
 import { validateEntry } from "../validations/validations.js";
 
@@ -27,7 +29,7 @@ async function registerTransaction(req, res) {
 
         await connection.query(`
         INSERT INTO transactions (user_id, date, description, value) VALUES ($1, $2, $3, $4);
-        `, [userId, new Date().toLocaleDateString(`pt-br`), description, value]);
+        `, [userId, dayjs().locale('pt-br').format('YYYY-MM-DD'), description, value]);
 
         res.status(201).send("Sua movimentação foi cadastrada.");
         
