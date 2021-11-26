@@ -1,8 +1,6 @@
 import connection from "../database/database.js";
 
 async function deleteTransaction(req, res) {
-    console.log(req.headers.authorization);
-
     const token = req.headers.authorization?.replace('Bearer ', '');
     const {id} = req.body;
 
@@ -21,7 +19,7 @@ async function deleteTransaction(req, res) {
         
     } catch (error) {
         console.log(error);
-        res.status(500).send("Ocorreu um erro no nosso sistema, tente novamente mais tarde.");
+        res.sendStatus(500);
     }
 }
 

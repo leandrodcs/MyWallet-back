@@ -36,7 +36,7 @@ async function signIn(req, res) {
         });
     } catch (error) {
         console.log(error);
-        res.status(500).send("Ocorreu um erro no nosso sistema, tente novamente mais tarde.");
+        res.sendStatus(500);
     }
 }
 

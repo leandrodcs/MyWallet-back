@@ -21,7 +21,7 @@ describe(`POST /sign-up`, () => {
         const body = {
             name: "test",
             email: "signuptester@test.com",
-            password: "test",
+            password: "password",
         };
         const result = await supertest(app).post(`/sign-up`).send(body);
         const status = result.status;
@@ -32,7 +32,7 @@ describe(`POST /sign-up`, () => {
         const body = {
             name: "test",
             email: "signuptester@test.com",
-            password: "test",
+            password: "password",
         };
         const result = await supertest(app).post(`/sign-up`).send(body);
         const status = result.status;
