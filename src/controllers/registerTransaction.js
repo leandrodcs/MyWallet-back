@@ -4,7 +4,6 @@ import connection from "../database/database.js";
 import { validateEntry } from "../validations/validations.js";
 
 async function registerTransaction(req, res) {
-
     const token = req.headers.authorization?.replace('Bearer ', '');
     const newEntry = req.body;
     const {
@@ -14,7 +13,6 @@ async function registerTransaction(req, res) {
 
     try {
 
-        if(!token) return res.status(401).send("Você não possui a chave de acesso.");
         if(validateEntry(newEntry)) return res.status(400).send("Preencha os campos corretamente.");
 
         const users = await connection.query(`

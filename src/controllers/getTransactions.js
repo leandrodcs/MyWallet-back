@@ -5,9 +5,6 @@ async function getTransactions(req, res) {
     const token = req.headers.authorization?.replace('Bearer ', '');
 
     try {
-
-        if(!token) return res.status(401).send("Você não possui a chave de acesso.");
-
         const transactions = await connection.query(`
             SELECT transactions.id, transactions.date, transactions.description, transactions.value FROM sessions
             JOIN transactions
