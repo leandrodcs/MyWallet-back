@@ -1,7 +1,6 @@
 import connection from "../database/database.js";
 
 async function getTransactions(req, res) {
-
     const token = req.headers.authorization?.replace('Bearer ', '');
 
     try {
