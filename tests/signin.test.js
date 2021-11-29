@@ -22,14 +22,14 @@ afterAll(async () => {
 
 describe(`POST /sign-in`, () => {
 
-    it(`returns 404 for invalid email`, async () => {
+    it(`returns 401 for invalid email`, async () => {
         const body = {
             email: "wrongEmail@test.com",
             password: "signintester",
         };
         const result = await supertest(app).post(`/sign-in`).send(body);
         const status = result.status;
-        expect(status).toEqual(404);
+        expect(status).toEqual(401);
     });
 
     it(`returns 401 for invalid password`, async () => {

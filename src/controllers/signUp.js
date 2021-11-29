@@ -13,7 +13,6 @@ async function signUp(req, res) {
     try {
         if(validateUser(newUser)) {
             const message = validateUser(newUser).details[0].message;
-            console.log("falhous")
             if(message.includes("name")) return res.status(400).send('Nome deve ter no máximo 30 caracteres');
             if(message.includes("email")) return res.status(400).send('Insira um email válido');
             if(message.includes("password")) return res.status(400).send('A senha deve ter no mínimo 6 caracteres');

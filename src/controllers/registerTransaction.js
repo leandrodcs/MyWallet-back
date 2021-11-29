@@ -23,7 +23,6 @@ async function registerTransaction(req, res) {
         `, [token]);
 
         const userId = users.rows[0].id;
-        if (!userId) return res.status(404).send("Suas credenciais expiraram.");
 
         await connection.query(`
         INSERT INTO transactions (user_id, date, description, value) VALUES ($1, $2, $3, $4);

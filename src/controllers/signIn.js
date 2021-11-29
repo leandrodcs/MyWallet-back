@@ -17,11 +17,11 @@ async function signIn(req, res) {
         const users = await connection.query(`SELECT * FROM users WHERE email = $1;`, [email]);
         const user = users.rows[0];
         if(!user) {
-            return res.status(404).send("Este email não está cadastrado.");
+            return res.status(401).send("Email e/ou senha incorretos.");
         }
         const isPasswordCorrect = bcrypt.compareSync(password, user.password);
         if(!isPasswordCorrect) {
-            return res.status(401).send("A senha inserida está incorreta.");
+            return res.status(401).send("Email e/ou senha incorretos.");
         }
         const token = generateToken();
         await connection.query(`
